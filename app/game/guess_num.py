@@ -5,6 +5,9 @@
 
 import random
 import collections
+import app.lib.mylog as mylog
+logger = mylog.get_logger("guess_num")
+
 
 
 def generate_num(guess_length, max_num):
@@ -39,20 +42,40 @@ class GuessNumGame:
 
     def play(self, ai):
         idx = 1
-        print("game started, num to guess:{}".format(self.to_guess))
+        logger.info("game started, num to guess:{}".format(self.to_guess))
         while idx <= self.max_judge_count:
-            print("round {}:".format(idx))
+            logger.info("round {}:".format(idx))
             guess = ai.guess()
             judge_dict = judge_num(self.to_guess, guess)
 
             judge_str = format_judge_dict(judge_dict)
-            print("guess:{}, judge result:{}".format(guess, judge_str))
+            logger.info("guess:{}, judge result:{}".format(guess, judge_str))
 
             ai.notice(judge_dict)
             if judge_dict["A"] == self.guess_length:
-                print("you win!")
+                logger.info("you win!")
                 return idx
             idx += 1
 
-        print("you lose!")
+        logger.info("you lose!")
         return -1
+
+
+def experience(ai_class, guess_length=4, max_judge_count=10, max_num=10, times=100):
+    lose_num = 0
+    win_list = []
+
+    for idx in range(1, times + 1):
+        logger.info("experience{}:".format(idx))
+        game = GuessNumGame(guess_length, max_judge_count, max_num)
+        ai = ai_class()
+        round_num = game.play(ai)
+        if round_num == -1:
+            lose_num += 1
+        else:
+            win_list.append(round_num)
+        win_num = len(win_list)
+        avg_round = sum(win_list) / win_num
+
+    logger.info("win:{}, lose{}, avg_round:{}".format(win_num, lose_num, avg_round))
+

@@ -3,6 +3,8 @@
 # @Time    : 5/8/17 8:09 PM
 # @Author  : xiaowa
 
+import os
+import sys
 
 def get_full_combination(lists):
     return get_iter_combination([], lists)
@@ -36,3 +38,11 @@ def get_iter_distinct_combination(collect, current, elements, times):
         get_iter_distinct_combination(collect, current + [item], elements, times - 1)
 
 
+def count_group_by(items):
+    keys = set(items)
+    rs_dict = dict(map(lambda x: (x, items.count(x)), keys))
+    return rs_dict
+
+
+def column_slice(items, idx):
+    return list(map(lambda x: x[idx], items))

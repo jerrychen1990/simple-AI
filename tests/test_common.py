@@ -17,7 +17,19 @@ def test_get_distinct_combination():
     print(len(rs))
 
 
-test_get_distinct_combination()
+def test_count_group_by():
+    src = [1, 2, 1, 3, 3, 3, 0]
+    rs = common.count_group_by(src)
+    print(rs)
+
+
+test_count_group_by()
+
+tmp = {1:1, 2:2}
+tmp.values()
+tmp.items()
+
+# test_get_distinct_combination()
 
 
 # # test_get_full_combination()
