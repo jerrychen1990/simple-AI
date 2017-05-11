@@ -2,13 +2,12 @@
 # -*- coding: utf-8 -*-
 # @Time    : 5/5/17 5:59 PM
 # @Author  : xiaowa
-import random
 import copy
-import itertools
-from app.lib.myrandom import random_pick
-from app.lib.mymath import get_entropy
-from app.lib.common import get_full_combination, get_distinct_combination, count_group_by, column_slice
+import random
+
 from app.game.guess_num import judge_num, format_judge_dict
+from app.lib.common import get_distinct_combination, count_group_by, column_slice, get_class
+from app.lib.mymath import get_entropy
 
 
 def random_guess(guess_length, max_num=10):
@@ -27,7 +26,6 @@ class StupidAI:
 
     def notice(self, judge_dict):
         pass
-
 
 
 class EntropyAI:
@@ -58,3 +56,7 @@ class EntropyAI:
         self.answer_set = list(
                 filter(lambda x: format_judge_dict(judge_num(x, last_guess)) == format_judge_dict(judge_dict),
                        self.answer_set))
+
+
+def get_ai_class(class_name):
+    return get_class(__name__, class_name)

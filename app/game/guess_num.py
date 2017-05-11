@@ -3,10 +3,13 @@
 # @Time    : 5/5/17 5:39 PM
 # @Author  : xiaowa
 
-import random
 import collections
+import random
+
 import app.lib.mylog as mylog
+
 logger = mylog.get_logger("guess_num")
+AI_MODULE_PATH = "app.ai.guess_num_ai"
 
 
 
@@ -64,7 +67,6 @@ class GuessNumGame:
 def experience(ai_class, guess_length=4, max_judge_count=10, max_num=10, times=100):
     lose_num = 0
     win_list = []
-
     for idx in range(1, times + 1):
         logger.info("experience{}:".format(idx))
         game = GuessNumGame(guess_length, max_judge_count, max_num)

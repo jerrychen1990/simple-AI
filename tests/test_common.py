@@ -3,8 +3,11 @@
 # @Time    : 5/8/17 11:39 AM
 # @Author  : xiaowa
 
+import os
 import app.lib.common as common
+import app.ai.guess_num_ai as guess_num_ai
 import app.game.guess_num as guess
+import app.config as config
 
 
 def test_get_full_combination():
@@ -23,11 +26,13 @@ def test_count_group_by():
     print(rs)
 
 
-test_count_group_by()
+def test_get_instance():
+    cur_path = ".".join(["app", "ai", "guess_num_ai"])
+    rs = common.get_instance(cur_path, "EntropyAI")
+    print(rs)
 
-tmp = {1:1, 2:2}
-tmp.values()
-tmp.items()
+
+test_get_instance()
 
 # test_get_distinct_combination()
 

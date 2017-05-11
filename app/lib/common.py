@@ -6,6 +6,7 @@
 import os
 import sys
 
+
 def get_full_combination(lists):
     return get_iter_combination([], lists)
 
@@ -46,3 +47,14 @@ def count_group_by(items):
 
 def column_slice(items, idx):
     return list(map(lambda x: x[idx], items))
+
+
+def get_class(module_path, class_name):
+    module = sys.modules[module_path]
+    clazz = getattr(module, class_name)
+    return clazz
+
+def get_instance(module_path, class_name):
+    clazz = get_class(module_path, class_name)
+    obj = clazz()
+    return obj
