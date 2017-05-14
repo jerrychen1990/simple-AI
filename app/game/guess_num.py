@@ -38,14 +38,14 @@ def format_judge_dict(rs_dict):
 
 
 class GuessNumGame:
-    def __init__(self, guess_length=4, max_judge_count=10, max_num=10):
+    def __init__(self, guess_length=4, max_judge_count=8, max_num=10):
         self.guess_length = guess_length
         self.to_guess = generate_num(guess_length, max_num)
         self.max_judge_count = max_judge_count
 
     def play(self, ai):
         idx = 1
-        logger.info("game started, num to guess:{}".format(self.to_guess))
+        logger.info("game started, num to guess:{} ai name:{}".format(self.to_guess, ai.__class__))
         while idx <= self.max_judge_count:
             logger.info("round {}:".format(idx))
             guess = ai.guess()
@@ -76,8 +76,9 @@ def experience(ai_class, guess_length=4, max_judge_count=10, max_num=10, times=1
             lose_num += 1
         else:
             win_list.append(round_num)
-        win_num = len(win_list)
-        avg_round = sum(win_list) / win_num
+
+    win_num = len(win_list)
+    avg_round = sum(win_list) / win_num
 
     logger.info("win:{}, lose{}, avg_round:{}".format(win_num, lose_num, avg_round))
 

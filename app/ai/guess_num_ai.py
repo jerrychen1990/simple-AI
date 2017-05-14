@@ -28,6 +28,35 @@ class StupidAI:
         pass
 
 
+class CutTreeAI:
+    def __init__(self, guess_length=4, max_num=10):
+        self.guess_history = []
+        self.guess_length = guess_length
+        self.max_num = max_num
+        self.answer_set = get_distinct_combination(list(range(0, max_num)), self.guess_length)
+
+    def guess(self):
+        guess = [-1] * self.guess_length
+        tmp_answer_set = copy.copy(self.answer_set)
+        for idx in range(0, self.guess_length):
+            group_list = list(
+                    map(lambda x: count_group_by(column_slice(tmp_answer_set, x)), range(0, self.guess_length)))
+            choose_idx = idx
+            candidate_list = list(filter(lambda x: x[0] not in guess, group_list[choose_idx].items()))
+            # random.shuffle(candidate_list)
+            choose_num = max(candidate_list, key=lambda x: x[1])[0]
+            guess[choose_idx] = choose_num
+            tmp_answer_set = list(filter(lambda x: x[choose_idx] == choose_num, tmp_answer_set))
+        self.guess_history.append(guess)
+        return guess
+
+    def notice(self, judge_dict):
+        last_guess = self.guess_history[-1]
+        self.answer_set = list(
+                filter(lambda x: format_judge_dict(judge_num(x, last_guess)) == format_judge_dict(judge_dict),
+                       self.answer_set))
+
+
 class EntropyAI:
     def __init__(self, guess_length=4, max_num=10):
         self.guess_history = []
@@ -56,6 +85,8 @@ class EntropyAI:
         self.answer_set = list(
                 filter(lambda x: format_judge_dict(judge_num(x, last_guess)) == format_judge_dict(judge_dict),
                        self.answer_set))
+
+
 
 
 def get_ai_class(class_name):
