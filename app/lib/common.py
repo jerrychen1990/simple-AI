@@ -5,6 +5,7 @@
 
 import os
 import sys
+import functools
 
 
 def get_full_combination(lists):
@@ -54,7 +55,16 @@ def get_class(module_path, class_name):
     clazz = getattr(module, class_name)
     return clazz
 
+
 def get_instance(module_path, class_name):
     clazz = get_class(module_path, class_name)
     obj = clazz()
     return obj
+
+
+def flatmap(func, seqs):
+    tmp_seqs = map(func, seqs)
+    rs_seq = []
+    for seq in tmp_seqs:
+        rs_seq.extend(seq)
+    return rs_seq
